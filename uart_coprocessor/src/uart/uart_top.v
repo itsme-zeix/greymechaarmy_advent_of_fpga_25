@@ -69,8 +69,9 @@ module uart_top
         // Serial ports
         input rx,               // USB-RS232 Rx
         output tx,              // USB-RS232 Tx
-    
+        
         // Receiving
+        output rx_char_received, 
         output rx_full,                 // do not write data to FIFO
         output rx_empty,                // no data to read from FIFO
         output [DBITS*FIFO_IN_SIZE - 1:0] rx_out,
@@ -118,6 +119,8 @@ module uart_top
          );
     // above working
     
+
+    assign rx_char_received = rx_done_tick;
     reg  [(DBITS * FIFO_IN_SIZE)-1:0] memory;
     wire [(DBITS * FIFO_IN_SIZE)-1:0] shifted_memory = memory << DBITS; 
     always @ (posedge clk_100MHz) begin

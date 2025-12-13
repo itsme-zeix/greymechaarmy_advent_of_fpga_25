@@ -29,7 +29,6 @@ module top(input clk_ext, input [4:0] btn, output [7:0] led, inout [7:0] interco
         end
     end
 
-    // Coprocessor /////////////////////////////////////////////////
     
     /// UART ////////////////////////////////////////////////
     parameter DBITS = 8;
@@ -39,7 +38,7 @@ module top(input clk_ext, input [4:0] btn, output [7:0] led, inout [7:0] interco
     wire rx;
     wire tx    = interconnect[1];
     wire [UART_FRAME_SIZE*DBITS-1:0] uart_rx_out;
-    reg  [UART_FRAME_SIZE*DBITS-1:0] uart_tx_out = "asdfghjkl";
+    wire [UART_FRAME_SIZE*DBITS-1:0] uart_tx_out; // = "asdfghjkl";
     reg                              uart_tx_controller_send = 0;
     wire rx_full, rx_empty;
     // Complete UART Core
@@ -65,18 +64,21 @@ module top(input clk_ext, input [4:0] btn, output [7:0] led, inout [7:0] interco
             .tx_in       (uart_tx_out) 
         );
 
+    // Coprocessor /////////////////////////////////////////////////
+    coprocessor #(
+        .WIDTH_DIN    (UART_FRAME_SIZE*DBITS-1),
+        .WIDTH_DOUT   (UART_FRAME_SIZE*DBITS-1)
+    ) u_coprocessor (
+        .clk (clk),
+        .rst (reset),
+
+        .din         (uart_rx_out),
+        .din_valid   (1'b0),
+        .dout        (uart_tx_out),
+        .dout_valid  ( )
+    );
+
     /// Control Logic ///////////////////////////////////////////////
-    // task uart_decoder_reset();
-    // endtask
-    // task uart_decoder();
-    // endtask
-
-    always @ (posedge clk_slow) begin
-        // uart_decoder_reset();
-        // uart_decoder();
-    end 
-
-    // https://gchq.github.io/CyberChef/#recipe=To_Hex('Space',0)Find_/_Replace(%7B'option':'Regex','string':'%20'%7D,',%208%5C'h',true,false,true,false)&input=e2hpX2knbV95b3VyX2FybXl9
     
     assign led = (
         ~btn[4] ? uart_rx_out[8*(1)-1:8*(0)] :
