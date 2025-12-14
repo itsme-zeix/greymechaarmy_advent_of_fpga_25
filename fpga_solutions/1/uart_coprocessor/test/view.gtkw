@@ -1,24 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.125 (w)1999-2025 BSI
-[*] Sun Dec 14 08:28:01 2025
+[*] Sun Dec 14 10:00:15 2025
 [*]
 [dumpfile] "/mnt/c/Users/zunmun/Documents/Stuff/Github/PERSONAL PROJECTS/greymechaarmy_advent_of_fpga_25/fpga_solutions/1/uart_coprocessor/waveform.vcd"
-[dumpfile_mtime] "Sun Dec 14 08:26:44 2025"
-[dumpfile_size] 3847
+[dumpfile_mtime] "Sun Dec 14 09:59:32 2025"
+[dumpfile_size] 29950
 [savefile] "/mnt/c/Users/zunmun/Documents/Stuff/Github/PERSONAL PROJECTS/greymechaarmy_advent_of_fpga_25/fpga_solutions/1/uart_coprocessor/test/view.gtkw"
-[timestart] 177630
+[timestart] 2578000
 [size] 2560 1481
-[pos] -1 -1
-*-12.787425 213770 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -27 -24
+*-19.387426 7539000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb.
 [treeopen] tb.dut.
 [sst_width] 284
 [signals_width] 522
 [sst_expanded] 1
 [sst_vpaned_height] 962
-@22
-tb.dut.calc_count[127:0]
-tb.dut.calc_position[127:0]
 @28
 tb.clk
 tb.rst
@@ -173,13 +170,9 @@ tb.dut.din[127:0]
 -group_end
 @22
 tb.dut.din_dly[127:0]
-@23
-tb.dut.calc_final_position[127:0]
-@22
-tb.dut.calc_position[127:0]
-tb.dut.calc_count[127:0]
 @28
 tb.dut.clk
+@29
 tb.dut.clk_slow
 @22
 tb.dut.clk_stepdown_count_val[31:0]
@@ -201,5 +194,9 @@ tb.dut.send
 @420
 tb.dut.WIDTH_DIN
 tb.dut.WIDTH_DOUT
+@22
+tb.dut.calc_count[31:0]
+tb.dut.calc_final_position[31:0]
+tb.dut.calc_position[31:0]
 [pattern_trace] 1
 [pattern_trace] 0
