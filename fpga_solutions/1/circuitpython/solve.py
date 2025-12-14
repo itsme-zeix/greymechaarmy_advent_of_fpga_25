@@ -43,7 +43,10 @@ class FpgaCoprocessor():
         self.pins = pins
     
     def reset(self):
-        fp.pins[5].value = 1 ; fp.pins[5].value = 0
+        fp.pins[5].value = 1
+        time.sleep(0.1)
+        fp.pins[5].value = 0
+        time.sleep(0.1)
         
     def set_mode(self, a, b, c):
         self.pins[0].value = a 
@@ -76,18 +79,22 @@ class FpgaCoprocessor():
 
 ### Processing ##################################
 fp = FpgaCoprocessor()
-fp.reset()
 fp.set_mode(0, 0, 0) # Normal Computation
 # Reset
 
-fp.set_mode(1, 0, 0) # Forwarding out din
-#fp.set_mode(0, 1, 0) # Position
-#fp.set_mode(0, 0, 1) # Position
+# fp.set_mode(1, 0, 0) # dly
+fp.set_mode(0, 1, 0) # dly
+fp.set_mode(0, 1, 1) # dly
 
 ##################################################################################
 PATH="/hackin7/aoc25/prob1/"
 
 def run():
+    fp.reset()
+    for i in range(3): # Fill up pipeline stages
+        fp.write_int(0)
+        print("stage:", 0, fp.read_int())
+    
     # Read Text file
     count = 0
     position = 50
@@ -102,10 +109,15 @@ def run():
             # ### Solution Without FPGA LMAO #####################
             # position = (position + value) % 100
             # if position == 0: count += 1
+            position = (position + value) % 100
             
             fp.write_int(value)
-            print("stage:", fp.read_int())
+            #fp.read_int() # print("stage:", value, fp.read_int(), position)
+            #fp.write_int(0)
+            print("stage:", value, fp.read_int(), position)
         
+    fp.write_int(0) # Clear pipeline stages
+    fp.read_int()
     fp.write_int(0) # Clear pipeline stages
     print("Ans:", fp.read_int())
 run()
