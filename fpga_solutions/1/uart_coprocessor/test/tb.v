@@ -68,7 +68,7 @@ module tb;
 
         @(posedge clk);
         #1;
-        din       = 144'h0002;
+        din       = 144'd49;
         din_valid = 1;
         #`CYCLE_DELAY;
 
@@ -82,14 +82,21 @@ module tb;
         @(posedge clk);
          // give time to finish computing
 
-        // ---------------------------
-        // Test 2: control[1] = 1 -> dout = prev_din_2
-        // ---------------------------
         @(posedge clk); // Return 1
         #1;
         din       = 144'h0003;
         din_valid = 1;
         #`CYCLE_DELAY;
+
+        // Pipeline ///////////////////////////
+        @(posedge clk);
+        #1;
+        din       = 144'd101;
+        din_valid = 0;
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+         // give time to finish computing
 
         @(posedge clk);
         #1;
