@@ -12,7 +12,13 @@ if input("type something to update fpga: ") != "":
     h = hardware.fpga.upload_bitstream(PATH+"/coprocessor.bit")
     h.deinit()
 
-
+def neg_int(x, bits):
+    # If MSB is set, convert to negative
+    if x & (1 << (bits - 1)):
+        x_signed = x - (1 << bits)
+    else:
+        x_signed = x
+    return x_signed
 
 ### Configure UART GPIO #########################
 class FpgaCoprocessor():    
@@ -68,13 +74,12 @@ class FpgaCoprocessor():
         self.uart.write(s)
     
     def read_int(self):
-        s = fp.uart.read()[-self.FRAME_SIZE :]
-        #print(len(s), s)
+        #s = fp.uart.read()[-self.FRAME_SIZE :]
+        s = fp.uart.read()[-4 :]
         n = int.from_bytes(s, byteorder="big")
+        #print(len(s), s, n, "", end="")
         # Convert to signed
-        max_neg = 1 << (16*8-2)
-        if n > max_neg:
-            n -= max_neg*2
+        n = neg_int(n, 4*8)
         return n
 
 ### Processing ##################################
@@ -82,14 +87,14 @@ fp = FpgaCoprocessor()
 fp.set_mode(0, 0, 0) # Normal Computation
 # Reset
 
-# fp.set_mode(1, 0, 0) # dly
+fp.set_mode(1, 0, 0) # dly
 fp.set_mode(0, 1, 0) # dly
-fp.set_mode(0, 1, 1) # dly
+fp.set_mode(0, 0, 1) # Get Final Answer
 
 ##################################################################################
 PATH="/hackin7/aoc25/prob1/"
 
-def run():
+def run(file="input_test1.txt", interleave=False):
     fp.reset()
     for i in range(3): # Fill up pipeline stages
         fp.write_int(0)
@@ -98,8 +103,7 @@ def run():
     # Read Text file
     count = 0
     position = 50
-    with open(PATH+"input_sample.txt") as f:
-    #with open(PATH+"input.txt") as f:
+    with open(PATH+file) as f:
         for line in f:
             str_direction = line[0]
             str_number = line[1:].strip()
@@ -112,12 +116,15 @@ def run():
             position = (position + value) % 100
             
             fp.write_int(value)
-            #fp.read_int() # print("stage:", value, fp.read_int(), position)
-            #fp.write_int(0)
+            if interleave:
+                fp.read_int() # print("stage:", value, fp.read_int(), position)
+                fp.write_int(0)
+            time.sleep(0.1)
             print("stage:", value, fp.read_int(), position)
         
     fp.write_int(0) # Clear pipeline stages
     fp.read_int()
     fp.write_int(0) # Clear pipeline stages
     print("Ans:", fp.read_int())
+
 run()
