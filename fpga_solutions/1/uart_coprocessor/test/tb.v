@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`define CYCLE_DELAY 0
+`define CYCLE_DELAY 1000
 //100
 // ChatGPTed, thanks lmao
 
@@ -53,7 +53,7 @@ module tb;
         control   = 6'b000000;
 
         // Release reset
-        #200;
+        #2100;
         rst = 0;
 
         // ---------------------------
@@ -63,13 +63,13 @@ module tb;
         #1;
         din       = 144'h0001;
         din_valid = 1;
-        // #`CYCLE_DELAY;
+        #`CYCLE_DELAY;
 
         @(posedge clk);
         #1;
         din       = 144'h0002;
         din_valid = 1;
-        // #`CYCLE_DELAY;
+        #`CYCLE_DELAY;
 
         // ---------------------------
         // Test 2: control[1] = 1 -> dout = prev_din_2
@@ -78,13 +78,13 @@ module tb;
         #1;
         din       = 144'h0003;
         din_valid = 1;
-        // #`CYCLE_DELAY;
+        #`CYCLE_DELAY;
 
         @(posedge clk);
         #1;
         din       = 144'h0004;
         din_valid = 1;
-        // #`CYCLE_DELAY;
+        #`CYCLE_DELAY;
 
         // ---------------------------
         // Test 3: default -> dout = prev_din + din
@@ -93,12 +93,12 @@ module tb;
         #1;
         din       = 144'h0005;
         din_valid = 1;
-        // #`CYCLE_DELAY;
+        #`CYCLE_DELAY;
 
         @(posedge clk);
         #1;
         din_valid = 1;
-        // #`CYCLE_DELAY;
+        #`CYCLE_DELAY;
 
         // Stop driving valid
         @(posedge clk);
