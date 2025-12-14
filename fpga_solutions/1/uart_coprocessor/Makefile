@@ -7,7 +7,7 @@ all: ${PROJ}.bit
 	yosys -p "synth_ecp5 -top top -json $@" tmp.v
 
 %_out.config: %.json
-	nextpnr-ecp5 --json $< --textcfg $@ --25k --package CABGA256 --lpf pinout.lpf
+	nextpnr-ecp5 --json $< --textcfg $@ --25k --package CABGA256 --lpf pinout.lpf --timing-allow-fail
 
 %.bit: %_out.config
 	ecppack --svf ${PROJ}.svf $< $@
@@ -15,7 +15,7 @@ all: ${PROJ}.bit
 ${PROJ}.svf : ${PROJ}.bit
 
 sim: 
-	iverilog -s tb -o test.vvp src/coprocessor.v test/tb.v
+	iverilog -gspecify -s tb -o test.vvp src/coprocessor.v test/tb.v
 	vvp test.vvp
 
 gtkwave: 

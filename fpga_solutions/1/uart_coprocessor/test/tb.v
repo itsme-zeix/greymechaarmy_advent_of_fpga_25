@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`define CYCLE_DELAY 1000
+`define CYCLE_DELAY 1
 //100
 // ChatGPTed, thanks lmao
 
@@ -53,7 +53,8 @@ module tb;
         control   = 6'b000000;
 
         // Release reset
-        #2100;
+        //#2100;
+        #200;
         rst = 0;
 
         // ---------------------------
@@ -61,7 +62,7 @@ module tb;
         // ---------------------------
         @(posedge clk);
         #1;
-        din       = 144'h0001;
+        din       = 144'd101;
         din_valid = 1;
         #`CYCLE_DELAY;
 
@@ -70,6 +71,16 @@ module tb;
         din       = 144'h0002;
         din_valid = 1;
         #`CYCLE_DELAY;
+
+        // Pipeline ///////////////////////////
+        @(posedge clk);
+        #1;
+        din       = 144'd101;
+        din_valid = 0;
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+         // give time to finish computing
 
         // ---------------------------
         // Test 2: control[1] = 1 -> dout = prev_din_2

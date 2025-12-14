@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.125 (w)1999-2025 BSI
-[*] Sun Dec 14 10:00:15 2025
+[*] Sun Dec 14 11:39:51 2025
 [*]
 [dumpfile] "/mnt/c/Users/zunmun/Documents/Stuff/Github/PERSONAL PROJECTS/greymechaarmy_advent_of_fpga_25/fpga_solutions/1/uart_coprocessor/waveform.vcd"
-[dumpfile_mtime] "Sun Dec 14 09:59:32 2025"
-[dumpfile_size] 29950
+[dumpfile_mtime] "Sun Dec 14 11:39:15 2025"
+[dumpfile_size] 3450
 [savefile] "/mnt/c/Users/zunmun/Documents/Stuff/Github/PERSONAL PROJECTS/greymechaarmy_advent_of_fpga_25/fpga_solutions/1/uart_coprocessor/test/view.gtkw"
-[timestart] 2578000
+[timestart] 167150
 [size] 2560 1481
-[pos] -27 -24
-*-19.387426 7539000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-14.011455 216030 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb.
 [treeopen] tb.dut.
 [sst_width] 284
@@ -35,6 +35,24 @@ tb.dout_valid
 -Coprocessor
 @28
 tb.dut.clk
+tb.dut.clk
+tb.dut.clk_slow
+@22
+tb.dut.control[5:0]
+@28
+tb.dut.din_valid
+tb.dut.din_valid_ext
+@22
+tb.dut.dout[127:0]
+@28
+tb.dut.dout_valid
+@22
+tb.dut.out[127:0]
+@28
+tb.dut.send
+@420
+tb.dut.WIDTH_DIN
+tb.dut.WIDTH_DOUT
 @c00022
 tb.dut.din[127:0]
 @28
@@ -169,34 +187,11 @@ tb.dut.din[127:0]
 @1401200
 -group_end
 @22
+[color] 3
 tb.dut.din_dly[127:0]
-@28
-tb.dut.clk
-@29
-tb.dut.clk_slow
-@22
-tb.dut.clk_stepdown_count_val[31:0]
-tb.dut.clk_stepdown_counter[31:0]
-tb.dut.control[5:0]
-@28
-tb.dut.din_valid
-tb.dut.din_valid_ext
-@22
-tb.dut.din_valid_ext_count_val[31:0]
-tb.dut.din_valid_ext_counter[31:0]
-tb.dut.dout[127:0]
-@28
-tb.dut.dout_valid
-@22
-tb.dut.out[127:0]
-@28
-tb.dut.send
-@420
-tb.dut.WIDTH_DIN
-tb.dut.WIDTH_DOUT
-@22
-tb.dut.calc_count[31:0]
 tb.dut.calc_final_position[31:0]
 tb.dut.calc_position[31:0]
+@23
+tb.dut.calc_count[31:0]
 [pattern_trace] 1
 [pattern_trace] 0
